@@ -24,16 +24,8 @@ pipeline {
 		).trim()
 	}
 	stages {
-		stage('Build Microservice') {
-            steps {
-                echo 'Building Microservice'
-                dir('microservicio-service/'){
-                    sh "mvn clean package"
-                }
-            }
-		}
 
-		stage('Sonarqube') {
+		stage('Build and Analyze') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
