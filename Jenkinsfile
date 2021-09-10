@@ -2,7 +2,6 @@ pipeline {
 	agent any
 	tools {
 		maven 'M3_6'
-        jdk 'jdk-1.8.101'
 		//nodejs 'NodeJs12'
 	}
 	environment {
