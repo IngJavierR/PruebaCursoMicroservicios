@@ -37,14 +37,8 @@ pipeline {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
-                    sh ''
                     withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
-                        sh "mvn clean package sonar:sonar \
-                            -Dsonar.projectKey=${SONAR_KEY} \
-                            -Dsonar.projectName=${SONAR_KEY} \
-                            -Dsonar.sources=src/main \
-                            -Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java \
-                            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
+                        sh "mvn clean package sonar:sonar"
                     }
                 }
 			}
