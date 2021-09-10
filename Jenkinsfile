@@ -39,7 +39,9 @@ pipeline {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Build image'
-                    sh 'docker build -t microservicio .'
+                    docker.withRegistry('', 'dockerhub_id') {
+                        sh 'docker build -t microservicio .'
+                    }
                 }
 			}
 		}
