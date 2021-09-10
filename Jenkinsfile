@@ -39,7 +39,8 @@ pipeline {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Build image'
-                    docker.withRegistry('', 'dockerhub_id') {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub_id	', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])  {
+                        sh 'docker login -u $USERNAME -p $PASSWORD'
                         sh 'docker build -t microservicio .'
                     }
                 }
