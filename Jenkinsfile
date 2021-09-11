@@ -58,15 +58,15 @@ pipeline {
 			}
 		}
 
-		/*stage('Database') {
+		stage('Database') {
 			steps {
 				dir('database/dev/'){
-					sh '/opt/liquibase/liquibase --version'
-					sh '/opt/liquibase/liquibase --changeLogFile="changesets/db.changelog-master.xml" update'
+					sh 'liquibase --version'
+					//sh '/opt/liquibase/liquibase --changeLogFile="changesets/db.changelog-master.xml" update'
 					echo 'Applying Db changes'
 				}
 			}
-		}*/
+		}
 
 		/*stage('Testing Estress') {
 			steps {

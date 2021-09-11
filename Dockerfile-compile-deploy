@@ -1,0 +1,8 @@
+FROM maven:3.8.2-jdk-11 as builder
+WORKDIR /workspace/app
+COPY /microservicio-service ./
+RUN mvn clean package
+
+FROM store/oracle/serverjre:8
+COPY --from=builder /workspace/app/microservicio-web/target/*.jar app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
