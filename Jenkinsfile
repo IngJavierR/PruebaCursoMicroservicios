@@ -14,9 +14,6 @@ pipeline {
 		ENVIRONMENT = "Dev"
 
 		// General configurations		
-		SONAR_KEY = "21_COMPANY_Microservicio_Dev";
-		SONAR_SERVER = "http://172.17.0.3:9000";
-		SONAR_TOKEN = "";
 		COMMITER_EMAIL = sh(
 			script: 'git --no-pager show -s --format=\'%an - %ae\'',
 			returnStdout: true
@@ -28,8 +25,12 @@ pipeline {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
-                    withSonarQubeEnv('sonarqube') { // If you have configured more than one global server connection, you can specify its name
-                        sh "mvn clean package sonar:sonar"
+                    withSonarQubeEnv('sonarqube') { 
+                        sh "-Dsonar.projectKey=21_MyCompany_Microservice \
+                            -Dsonar.projectName=21_MyCompany_Microservice \
+                            -Dsonar.sources=src/main \
+                            -Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java \
+                            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
                     }
                 }
 			}
