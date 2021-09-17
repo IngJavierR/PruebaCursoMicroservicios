@@ -45,14 +45,14 @@ pipeline {
                 dir('microservicio-service/'){
                     echo 'Analyse Dependencies'
                     dependencyCheck additionalArguments: ''' 
-                    -o "microservicio-web/target/site/dependency" 
+                    -o "./" 
                     -s "./"
                     -f "ALL" 
 					--cveUrlModified=http://192.168.1.133/nvdcve-1.1-modified.json.gz
 					--cveUrlBase=http://192.168.1.133/nvdcve-1.1-%d.json.gz
                     --prettyPrint''', odcInstallation: 'Dependency Checker'
 
-                dependencyCheckPublisher pattern: 'microservicio-web/target/site/dependency/dependency-check-report.xml'
+                dependencyCheckPublisher pattern: './dependency-check-report.xml'
                 }
 			}
 		}
