@@ -52,7 +52,7 @@ pipeline {
 					--cveUrlBase=http://192.168.1.133/nvdcve-1.1-%d.json.gz
                     --prettyPrint''', odcInstallation: 'Dependency Checker'
 
-                dependencyCheckPublisher pattern: 'dependency-check-report.html'
+                dependencyCheckPublisher pattern: 'microservicio-web/target/site/dependency/dependency-check-report.html'
                 }
 			}
 		}
