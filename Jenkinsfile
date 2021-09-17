@@ -42,10 +42,7 @@ pipeline {
                 dir('microservicio-service/'){
                     echo 'Analyse Dependencies'
                     dependencyCheck additionalArguments: ''' 
-                    -o "./" 
-                    -s "./"
-                    -f "ALL" 
-					--cveUrlBase=https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz
+                    --enableExperimental
                     --prettyPrint''', odcInstallation: 'Dependency Checker'
 
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
