@@ -21,7 +21,7 @@ pipeline {
 	}
 	stages {
 
-		stage('Build and Analyze') {
+		/*stage('Build and Analyze') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
@@ -36,7 +36,7 @@ pipeline {
                     }
                 }
 			}
-		}
+		}*/
 
 		stage('Dependency Check') {
 			steps {
