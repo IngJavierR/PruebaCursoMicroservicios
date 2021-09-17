@@ -40,6 +40,13 @@ pipeline {
                 }
 			}
 		}
+		stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+        }
 		/*stage('Dependency Check') {
 			steps {
                 dir('microservicio-service/'){
