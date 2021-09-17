@@ -21,7 +21,7 @@ pipeline {
 	}
 	stages {
 
-		/*stage('Build and Analyze') {
+		stage('Build and Analyze') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
@@ -30,22 +30,13 @@ pipeline {
                             -Dsonar.projectKey=21_MyCompany_Microservice \
                             -Dsonar.projectName=21_MyCompany_Microservice \
                             -Dsonar.sources=src/main \
+							-Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
                             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+							-Dsonar.dependencyCheck.htmlReportPath=/target/dependency-check-report.html \
+							-Dsonar.dependencyCheck.jsonReportPath=/target/dependency-check-report.json \
+							-Dsonar.dependencyCheck.summarize=true \
 							-Djacoco.output=tcpclient -Djacoco.address=127.0.0.1 -Djacoco.port=10001"
                     }
-                }
-			}
-		}*/
-
-		stage('Dependency Check') {
-			steps {
-                dir('microservicio-service/'){
-                    echo 'Analyse Dependencies'
-                    dependencyCheck additionalArguments: ''' 
-                    --enableExperimental
-                    --prettyPrint''', odcInstallation: 'Dependency Checker'
-
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
                 }
 			}
 		}
