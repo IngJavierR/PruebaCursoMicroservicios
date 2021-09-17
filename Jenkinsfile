@@ -26,7 +26,7 @@ pipeline {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
                     withSonarQubeEnv('sonarqube') { 
-                        sh "mvn clean package sonar:sonar \
+                        sh "mvn clean package dependency-check:check sonar:sonar \
                             -Dsonar.projectKey=21_MyCompany_Microservice \
                             -Dsonar.projectName=21_MyCompany_Microservice \
                             -Dsonar.sources=src/main \
@@ -40,29 +40,13 @@ pipeline {
                 }
 			}
 		}
-		stage("Quality Gate") {
+		/*stage("Quality Gate") {
             steps {
 				timeout(time: 2, unit: 'MINUTES') {
                 	waitForQualityGate abortPipeline: true
               	}
             }
-        }
-		/*stage('Dependency Check') {
-			steps {
-                dir('microservicio-service/'){
-                    echo 'Analyse Dependencies'
-                    dependencyCheck additionalArguments: ''' 
-                    -o "./" 
-                    -s "./"
-                    -f "HTML" 
-					--cveUrlModified=http://192.168.1.133/nvdcve-1.1-modified.json.gz
-					--cveUrlBase=http://192.168.1.133/nvdcve-1.1-%d.json.gz
-                    --prettyPrint''', odcInstallation: 'Dependency Checker'
-
-                dependencyCheckPublisher pattern: 'dependency-check-report.html'
-                }
-			}
-		}*/
+        }*/
 
         /*stage('Build Docker') {
 			steps {
