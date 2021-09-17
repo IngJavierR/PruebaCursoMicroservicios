@@ -65,8 +65,8 @@ pipeline {
                 dir('microservicio-service/'){
                     echo 'Push Docker Image'
 					withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockernexus_id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])  {
-						sh 'docker tag microservicio 172.17.0.5:8082/repository/docker-group/microservicio:1'
-						sh 'docker push 172.17.0.5:8082/repository/docker-group/microservicio:1'
+						sh 'docker tag microservicio 192.168.1.133:8082/repository/docker-group/microservicio:1'
+						sh 'docker push 192.168.1.133:8082/repository/docker-group/microservicio:1'
 					}
                 }
 			}
