@@ -37,6 +37,21 @@ pipeline {
 			}
 		}
 
+		stage('Dependency Check') {
+			steps {
+                dir('microservicio-service/'){
+                    echo 'Analyse Dependencies'
+                    dependencyCheck additionalArguments: ''' 
+                    -o "./" 
+                    -s "./"
+                    -f "ALL" 
+                    --prettyPrint''', odcInstallation: 'Dependency Checker'
+
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+                }
+			}
+		}
+
         /*stage('Build Docker') {
 			steps {
                 dir('microservicio-service/'){
