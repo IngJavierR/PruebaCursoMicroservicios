@@ -45,8 +45,8 @@ pipeline {
                 dir('microservicio-service/'){
                     echo 'Analyse Dependencies'
                     dependencyCheck additionalArguments: ''' 
-                    -o "./" 
-                    -s "./"
+                    -o "/" 
+                    -s "/"
                     -f "ALL" 
 					--cveUrlModified=http://192.168.1.133/nvdcve-1.1-modified.json.gz
 					--cveUrlBase=http://192.168.1.133/nvdcve-1.1-%d.json.gz
