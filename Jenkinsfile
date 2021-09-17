@@ -21,7 +21,7 @@ pipeline {
 	}
 	stages {
 
-		stage('Build and Analyze') {
+		/*stage('Build and Analyze') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
@@ -30,7 +30,7 @@ pipeline {
                             -Dsonar.projectKey=21_MyCompany_Microservice \
                             -Dsonar.projectName=21_MyCompany_Microservice \
                             -Dsonar.sources=src/main \
-							-Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
+							
                             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
 							-Dsonar.dependencyCheck.htmlReportPath=microservicio-web/target/site/dependency/dependency-check-report.html \
 							-Dsonar.dependencyCheck.jsonReportPath=microservicio-web/target/site/dependency/dependency-check-report.json \
@@ -39,7 +39,7 @@ pipeline {
                     }
                 }
 			}
-		}
+		}*/
 		/*stage("Quality Gate") {
             steps {
 				timeout(time: 2, unit: 'MINUTES') {
@@ -48,7 +48,7 @@ pipeline {
             }
         }*/
 
-        stage('Build Docker') {
+        /*stage('Build Docker') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Build image'
@@ -58,14 +58,14 @@ pipeline {
                     }
                 }
 			}
-		}
+		}*/
 
 		stage('Run Push') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Push Docker Image'
 					withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockernexus_id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])  {
-						sh 'docker login -u $USERNAME -p $PASSWORD'
+						sh 'docker login 192.168.1.133:8082 -u $USERNAME -p $PASSWORD'
 						sh 'docker tag microservicio 192.168.1.133:8082/repository/docker-group/microservicio:1'
 						sh 'docker push 192.168.1.133:8082/repository/docker-group/microservicio:1'
 					}
