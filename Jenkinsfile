@@ -47,7 +47,7 @@ pipeline {
                     -s "./"
                     -f "ALL" 
 					--cveUrlModified=https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2021.json.gz
-					--cveUrlBase=http://mirror-url/nist/nvdcve-1.1-%d.json.gz
+					--cveUrlBase=https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2021.json.gz
                     --prettyPrint''', odcInstallation: 'Dependency Checker'
 
                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
