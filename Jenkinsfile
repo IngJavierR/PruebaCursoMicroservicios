@@ -32,8 +32,8 @@ pipeline {
                             -Dsonar.sources=src/main \
 							-Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
                             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-							-Dsonar.dependencyCheck.htmlReportPath=/target/dependency-check-report.html \
-							-Dsonar.dependencyCheck.jsonReportPath=/target/dependency-check-report.json \
+							-Dsonar.dependencyCheck.htmlReportPath=/target/site/dependency/dependency-check-report.html \
+							-Dsonar.dependencyCheck.jsonReportPath=/target/site/dependency/dependency-check-report.json \
 							-Dsonar.dependencyCheck.summarize=true \
 							-Djacoco.output=tcpclient -Djacoco.address=127.0.0.1 -Djacoco.port=10001"
                     }
