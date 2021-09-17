@@ -21,7 +21,7 @@ pipeline {
 	}
 	stages {
 
-		stage('Build and Analyze') {
+		/*stage('Build and Analyze') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
@@ -30,7 +30,7 @@ pipeline {
                             -Dsonar.projectKey=21_MyCompany_Microservice \
                             -Dsonar.projectName=21_MyCompany_Microservice \
                             -Dsonar.sources=src/main \
-							-Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
+							
                             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
 							-Dsonar.dependencyCheck.htmlReportPath=microservicio-web/target/site/dependency/dependency-check-report.html \
 							-Dsonar.dependencyCheck.jsonReportPath=microservicio-web/target/site/dependency/dependency-check-report.json \
@@ -39,20 +39,20 @@ pipeline {
                     }
                 }
 			}
-		}
+		}*/
 		stage('Dependency Check') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Dependencies'
                     dependencyCheck additionalArguments: ''' 
-                    -o "./" 
+                    -o "microservicio-web/target/site/dependency" 
                     -s "./"
-                    -f "ALL" 
+                    -f "HTML" 
 					--cveUrlModified=http://192.168.1.133/nvdcve-1.1-modified.json.gz
 					--cveUrlBase=http://192.168.1.133/nvdcve-1.1-%d.json.gz
                     --prettyPrint''', odcInstallation: 'Dependency Checker'
 
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+                dependencyCheckPublisher pattern: 'dependency-check-report.html'
                 }
 			}
 		}
