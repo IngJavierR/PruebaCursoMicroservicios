@@ -160,6 +160,8 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <cveUrlModified>http://192.168.1.133/nvdcve-1.1-modified.json.gz</cveUrlModified>
+                    <cveUrlBase>http://192.168.1.133/nvdcve-1.1-%d.json.gz</cveUrlBase>
                     <formats>
                         <format>html</format>
                         <format>json</format>
