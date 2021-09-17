@@ -37,7 +37,7 @@ pipeline {
 			}
 		}
 
-        stage('Build Docker') {
+        /*stage('Build Docker') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Build image'
@@ -47,18 +47,18 @@ pipeline {
                     }
                 }
 			}
-		}
+		}*/
 
-        stage('Run Docker') {
+        /*stage('Run Docker') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Run Docker'
                     sh 'docker run -d -p 8090:8090 microservicio'
                 }
 			}
-		}
+		}*/
 
-		stage('Database') {
+		/*stage('Database') {
 			steps {
 				dir('database/dev/'){
 					sh 'liquibase --version'
@@ -66,7 +66,7 @@ pipeline {
 					echo 'Applying Db changes'
 				}
 			}
-		}
+		}*/
 
 		/*stage('Testing Estress') {
 			steps {
