@@ -109,12 +109,10 @@ pipeline {
             steps {
 				dir('cypress/') {
 					sh 'docker run --rm --name Cypress -v /Users/javierrodriguez/Documents/Repositorios/CursoMicroservicios/jenkins_home/workspace/Pruebas/cypress:/e2e -w /e2e -e Cypress cypress/included:3.4.0'
-				}
-				dir('cypress/videos/') {
-                    sh 'tar cvf videos.tar .'
-                    archiveArtifacts artifacts: 'videos.tar',
+					sh 'tar -czvf videos.tar.gz /videos'
+					archiveArtifacts artifacts: 'videos.tar',
                     allowEmptyArchive: true
-                }
+				}
             }
         }
 
