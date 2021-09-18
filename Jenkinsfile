@@ -132,18 +132,10 @@ pipeline {
 				}
 			}
 		}*/
-
-		/*stage('Testing UI') {
-			steps {
-				dir('testing/ui/'){
-					echo 'Running UI Testing'
-				}
-			}
-		}*/
 	}
 	post {
 		always {
-			//deleteDir()
+			deleteDir()
 			echo 'Always'
 		}
 		success {
