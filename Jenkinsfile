@@ -108,8 +108,6 @@ pipeline {
 		stage('Testing') {
             steps {
 				dir('cypress/') {
-					 echo 'workspace: ' +  env.WORKSPACE
-                	echo '${WORKSPACE}'
 					sh 'docker run --rm --name Cypress -v /Users/javierrodriguez/Documents/Repositorios/CursoMicroservicios/jenkins_home/workspace/Pruebas/cypress:/e2e -w /e2e -e Cypress cypress/included:3.4.0'
 				}
             }
@@ -170,4 +168,9 @@ pipeline {
 def NewPatterName()
 {
 	return "_" + new Date().format('ddMMyyyy') + "_" + "${env.BUILD_NUMBER}";
+}
+
+def directoryIsNotEmpty(String dir) {
+
+    new File({env.WORKSPACE} + '/' + dir).list().any()
 }
