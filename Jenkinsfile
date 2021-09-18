@@ -110,7 +110,7 @@ pipeline {
 				dir('cypress/') {
 					 echo 'workspace: ' +  env.WORKSPACE
                 	echo '${WORKSPACE}'
-					sh 'docker run --rm --name Cypress -v $PWD:/e2e -w /e2e -e Cypress cypress/included:3.4.0'
+					sh 'docker run --rm --name Cypress -v /Users/javierrodriguez/Documents/Repositorios/CursoMicroservicios/jenkins_home/workspace/Pruebas/cypress:/e2e -w /e2e -e Cypress cypress/included:3.4.0'
 				}
             }
         }
