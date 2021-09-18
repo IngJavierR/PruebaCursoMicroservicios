@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	tools {
 		maven 'M3_6'
-		//nodejs 'NodeJs12'
+		nodejs 'NodeJs12'
 	}
 	environment {
 		//Functions
@@ -80,6 +80,19 @@ pipeline {
 					sh 'docker stop microservicio-one'
                     sh 'docker run -d --rm --name microservicio-one -e SPRING_PROFILES_ACTIVE=qa -p 8090:8090 192.168.1.133:8083/repository/docker-private/microservicio:1'
                 }
+			}
+		}
+
+		stage('Frontend') {
+			steps {
+				echo 'Building Frontend'
+				dir('frontend/'){
+					sh 'npm install'
+					sh 'npm run build'
+					sh 'docker login -u $USERNAME -p $PASSWORD'
+					sh "docker build -t frontend-web ."
+					sh 'docker run -d --rm --name frontend-one -p 8010:80 frontend-web'
+				}
 			}
 		}
 
