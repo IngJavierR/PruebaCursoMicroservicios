@@ -77,6 +77,7 @@ pipeline {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Run Docker'
+					sh 'docker stop microservicio-one'
                     sh 'docker run -d --rm --name microservicio-one -e SPRING_PROFILES_ACTIVE=qa -p 8090:8090 192.168.1.133:8083/repository/docker-private/microservicio:1'
                 }
 			}
