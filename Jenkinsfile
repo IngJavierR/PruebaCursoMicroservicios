@@ -21,7 +21,7 @@ pipeline {
 	}
 	stages {
 
-		/*stage('Build and Analyze') {
+		stage('Build and Analyze') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
@@ -30,7 +30,7 @@ pipeline {
                             -Dsonar.projectKey=21_MyCompany_Microservice \
                             -Dsonar.projectName=21_MyCompany_Microservice \
                             -Dsonar.sources=src/main \
-							
+							-Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
                             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
 							-Dsonar.dependencyCheck.htmlReportPath=microservicio-web/target/site/dependency/dependency-check-report.html \
 							-Dsonar.dependencyCheck.jsonReportPath=microservicio-web/target/site/dependency/dependency-check-report.json \
@@ -39,7 +39,7 @@ pipeline {
                     }
                 }
 			}
-		}*/
+		}
 		/*stage("Quality Gate") {
             steps {
 				timeout(time: 2, unit: 'MINUTES') {
@@ -48,7 +48,7 @@ pipeline {
             }
         }*/
 
-        /*stage('Build Docker') {
+        stage('Build Docker') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Build image'
@@ -89,6 +89,7 @@ pipeline {
 				dir('frontend/'){
 					sh 'npm install'
 					sh 'npm run build'
+					sh 'docker stop frontend-one'
 					sh "docker build -t frontend-web ."
 					sh 'docker run -d --rm --name frontend-one -p 8010:80 frontend-web'
 				}
@@ -103,7 +104,7 @@ pipeline {
 					echo 'Applying Db changes'
 				}
 			}
-		}*/
+		}
 
 		stage('Testing') {
             steps {
