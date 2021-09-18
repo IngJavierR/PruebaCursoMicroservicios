@@ -21,7 +21,7 @@ pipeline {
 	}
 	stages {
 
-		/*stage('Build and Analyze') {
+		stage('Build and Analyze') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Analyse Code'
@@ -30,7 +30,7 @@ pipeline {
                             -Dsonar.projectKey=21_MyCompany_Microservice \
                             -Dsonar.projectName=21_MyCompany_Microservice \
                             -Dsonar.sources=src/main \
-							
+							-Dsonar.coverage.exclusions=**/*TO.java,**/*DO.java,**/curso/web/**/*,**/curso/persistence/**/*,**/curso/commons/**/*,**/curso/model/**/* \
                             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
 							-Dsonar.dependencyCheck.htmlReportPath=microservicio-web/target/site/dependency/dependency-check-report.html \
 							-Dsonar.dependencyCheck.jsonReportPath=microservicio-web/target/site/dependency/dependency-check-report.json \
@@ -39,7 +39,7 @@ pipeline {
                     }
                 }
 			}
-		}*/
+		}
 		/*stage("Quality Gate") {
             steps {
 				timeout(time: 2, unit: 'MINUTES') {
@@ -48,7 +48,7 @@ pipeline {
             }
         }*/
 
-        /*stage('Build Docker') {
+        stage('Build Docker') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Build image'
@@ -58,7 +58,7 @@ pipeline {
                     }
                 }
 			}
-		}*/
+		}
 
 		stage('Run Push') {
 			steps {
@@ -73,24 +73,24 @@ pipeline {
 			}
 		}
 
-        /*stage('Run Docker') {
+        stage('Run Docker') {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Run Docker'
-                    sh 'docker run -d -p 8090:8090 microservicio'
+                    sh 'docker run -d --name microservicio-one -e SPRING_PROFILES_ACTIVE=qa -p 8090:8090 192.168.1.133:8083/repository/docker-private/microservicio:1'
                 }
 			}
-		}*/
+		}
 
-		/*stage('Database') {
+		stage('Database') {
 			steps {
 				dir('database/dev/'){
 					sh 'liquibase --version'
-					//sh '/opt/liquibase/liquibase --changeLogFile="changesets/db.changelog-master.xml" update'
+					sh '/opt/liquibase/liquibase --changeLogFile="changesets/db.changelog-master.xml" update'
 					echo 'Applying Db changes'
 				}
 			}
-		}*/
+		}
 
 		/*stage('Testing Estress') {
 			steps {
