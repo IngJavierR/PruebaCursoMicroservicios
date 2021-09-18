@@ -77,14 +77,14 @@ pipeline {
 			steps {
                 dir('microservicio-service/'){
                     echo 'Run Docker'
-                    sh 'docker run -d --name microservicio-one -e SPRING_PROFILES_ACTIVE=qa -p 8090:8090 192.168.1.133:8083/repository/docker-private/microservicio:1'
+                    sh 'docker run -d --rm --name microservicio-one -e SPRING_PROFILES_ACTIVE=qa -p 8090:8090 192.168.1.133:8083/repository/docker-private/microservicio:1'
                 }
 			}
 		}
 
 		stage('Database') {
 			steps {
-				dir('database/dev/'){
+				dir('liquibase/'){
 					sh 'liquibase --version'
 					sh '/opt/liquibase/liquibase --changeLogFile="changesets/db.changelog-master.xml" update'
 					echo 'Applying Db changes'
