@@ -89,7 +89,6 @@ pipeline {
 				dir('frontend/'){
 					sh 'npm install'
 					sh 'npm run build'
-					sh 'docker login -u $USERNAME -p $PASSWORD'
 					sh "docker build -t frontend-web ."
 					sh 'docker run -d --rm --name frontend-one -p 8010:80 frontend-web'
 				}
