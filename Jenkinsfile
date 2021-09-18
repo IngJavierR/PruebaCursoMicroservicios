@@ -115,10 +115,6 @@ pipeline {
 
         stage('tar videos') 
         {
-            when 
-            {
-                expression  { return directoryIsNotEmpty('cypress/videos') }
-            }
             steps 
             {
                 dir('cypress/videos/') {
