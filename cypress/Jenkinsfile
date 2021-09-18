@@ -1,0 +1,114 @@
+pipeline {
+    agent any
+    environment
+	{
+		//Functions
+		DEPLOY_PATTERN = NewPatterName()
+		
+		// Projtect configurations
+        COMPANY = "Axity"
+        COMPANY_LOWERCASE = "axity"
+		PROJECT_NAME = "Cypress"
+        SLACK_CHANNEL = "#cypress"
+        ENVIRONMENT = "Dev"
+
+		// General configurations		
+        COMMITER_EMAIL = sh (
+            script: 'git --no-pager show -s --format=\'%an - %ae\'',
+            returnStdout: true
+        ).trim()
+	}
+    stages {
+        stage('Build Cypress') {
+            steps {
+                echo 'Docker Path: ' + env.dockerPath
+                echo 'Building cypress - image name: ' + env.DEPLOY_PATTERN
+                sh '${dockerPath}docker run --name "${DEPLOY_PATTERN}" -v $PWD:/e2e -w /e2e -e Cypress_Axity cypress/included:3.4.0'
+
+
+                // sh '${dockerPath}docker logs ${DEPLOY_PATTERN} > DEPLOY_PATTERN.txt'   
+
+                echo 'comprobando' 
+
+                echo 'workspace: ' +  env.WORKSPACE
+                echo '${WORKSPACE}'
+
+                //  echo directoryEmpty('cypress/videos')  
+            }
+        }
+
+        stage('zip videos') 
+        {
+            when 
+            {
+                expression  { return directoryIsNotEmpty('cypress/videos') }
+            }
+            steps 
+            {
+                echo 'en zip videos'
+                dir('cypress/videos') {
+                    sh 'zip -r videos.zip .'
+                    archiveArtifacts artifacts: 'videos.zip',
+                    allowEmptyArchive: true
+                }
+            }
+        }
+    }
+    post { 
+        always { 
+
+            
+
+            // dir('cypress/screenshots') {
+            //     sh 'zip -r screenshots.zip .'
+            //     archiveArtifacts artifacts: 'screenshots.zip',
+            //     allowEmptyArchive: true
+            // }
+
+            deleteDir()
+            echo 'Copia'
+            //SlackMsg(currentBuild.currentResult) 
+        }
+        success {
+            echo 'I succeeeded!'
+        }
+        unstable {
+            echo 'I am unstable :/'
+        }
+        failure {
+            echo 'I failed :('
+        }
+        changed {
+            echo 'Things were different before...'
+        }
+    }
+}
+
+def NewPatterName()
+{
+	return "Cypress_" + new Date().format( 'ddMMyyyy' ) + "_" + "${env.BUILD_NUMBER}";
+}
+
+def SlackMsg(String buildResult) 
+{
+	String message = "Compilation result ${env.BUILD_DISPLAY_NAME} for job  \"${env.JOB_NAME}\"  is " + buildResult +  " launched by ${env.COMMITER_EMAIL}. For more details got to ${env.JOB_URL}"
+    echo "${env.BUILD_DISPLAY_NAME}"
+	
+	if(buildResult == "SUCCESS")
+	{
+		slackSend channel: "${SLACK_CHANNEL}", color: "good", message: message
+	}
+	else if(buildResult == "UNSTABLE")
+	{ 
+		slackSend channel: "${SLACK_CHANNEL}", color: "warning", message: message
+	}
+	else
+	{
+		slackSend channel: "${SLACK_CHANNEL}", color: "danger", message: message
+	}
+}
+
+def directoryIsNotEmpty(String dir) {
+
+    new File({env.WORKSPACE} + '/' + dir).list().any()
+}
