@@ -21,8 +21,8 @@ pipeline {
 	}
 	stages {
 		stage('Testing Estress') {
+            sleep 10
 			steps {
-                sh 'docker stop aaaaaa || true '
                 dir('gatling/'){
                     sh 'mvn gatling:test'
                 }
