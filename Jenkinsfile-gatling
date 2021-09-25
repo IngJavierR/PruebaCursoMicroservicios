@@ -22,9 +22,7 @@ pipeline {
 	stages {
 		stage('Testing Estress') {
 			steps {
-                def containerExist = sh script: "docker ps -q -f name=hopeful_varahamihira", returnStatus: true
-                echo 'Container Exist'
-                echo containerExist
+                sh 'docker stop aaaaaa || true '
                 dir('gatling/'){
                     sh 'mvn gatling:test'
                 }
