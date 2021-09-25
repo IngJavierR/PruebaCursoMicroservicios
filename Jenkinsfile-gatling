@@ -1,0 +1,64 @@
+pipeline {
+	agent any
+	tools {
+		maven 'M3_6'
+		nodejs 'NodeJs12'
+	}
+	environment {
+		//Functions
+		DEPLOY_PATTERN = NewPatterName()
+
+		// Projtect configurations
+		COMPANY = "MyPersonalCompany"
+		//SLACK_CHANNEL = "#slack_channel"
+		ENVIRONMENT = "Dev"
+
+		// General configurations		
+		COMMITER_EMAIL = sh(
+			script: 'git --no-pager show -s --format=\'%an - %ae\'',
+			returnStdout: true
+		).trim()
+	}
+	stages {
+		stage('Testing Estress') {
+			steps {
+                dir('gatling/'){
+                    sh 'mvn gatling:test'
+                }
+            }
+            post {
+                always {
+                    gatlingArchive()
+                }
+            }
+		}
+	}
+	post {
+		always {
+			deleteDir()
+			echo 'Always'
+		}
+		success {
+			echo 'I succeeeded!'
+		}
+		unstable {
+			echo 'I am unstable :/'
+		}
+		failure {
+			echo 'I failed :('
+		}
+		changed {
+			echo 'Things were different before...'
+		}
+	}
+}
+
+def NewPatterName()
+{
+	return "_" + new Date().format('ddMMyyyy') + "_" + "${env.BUILD_NUMBER}";
+}
+
+def directoryIsNotEmpty(String dir) {
+
+    new File({env.WORKSPACE} + '/' + dir).list().any()
+}
