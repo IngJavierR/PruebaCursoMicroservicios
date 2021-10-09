@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.1.133:5432/microservicio
+    username: postgres
+    password: project123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    show-sql: true
+  application:
+    name: microservicio-service-two
+  profiles: qa
+
+server:
+  port: 8100
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.1.133:8761/eureka
+  instance:
+    leaseRenewalIntervalInSeconds: 5   
+    preferIpAddress: true
