@@ -3,11 +3,13 @@ package mx.com.curso.services.service;
 import mx.com.curso.commons.to.UserTO;
 import mx.com.curso.services.BaseTest;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import java.util.List;
 
 public class MicroservicioServiceTest extends BaseTest {
 
+    @Ignore
     @Test
     public void exampleTest() {
 
