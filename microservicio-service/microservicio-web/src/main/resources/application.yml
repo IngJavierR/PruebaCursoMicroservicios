@@ -14,7 +14,7 @@ spring:
     active: dev
 
 server:
-  port: 8090
+  port: 8102
 
 eureka:
   client:
