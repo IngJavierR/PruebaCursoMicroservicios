@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello-world
+spec:
+  #completions: 50
+  #parallelism: 10
+  template:
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: 
+         - "/bin/bash"
+         - "-c"
+         - "/bin/echo Hello from pod $(hostname) at $(date)"
+      restartPolicy: Never

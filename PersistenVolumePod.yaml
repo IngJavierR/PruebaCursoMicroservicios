@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-web
+  template:
+    metadata:
+      labels:
+        app: nginx-web
+    spec:
+      volumes: 
+      - name: webcontent
+        persistentVolumeClaim:
+          claimName: pvc-nfs-data
+      containers:
+      - name: nginx-web-app-pod
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: webcontent
+          mountPath: "/usr/share/nginx/html"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-svc
+spec:
+  selector:
+    app: nginx-web
+  ports:
+  - port: 8090
+    protocol: TCP
+    targetPort: 80
+  type: LoadBalancer
