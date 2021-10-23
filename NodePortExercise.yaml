@@ -21,8 +21,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world
+  name: hello-world-svc
 spec:
+  type: NodePort
   selector:
     app: hello-world
   ports:

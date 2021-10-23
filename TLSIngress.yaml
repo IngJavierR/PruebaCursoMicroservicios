@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+medatada:
+  name: ingress-single
+spec:
+  ingressClassName: nginx
+  tls: 
+  - hosts:
+    - tls.example.com
+    secretName: tls-secret
+  rules:
+    - host: tls.example.com
+      http: 
+        paths: 
+        - path: /red
+          pathType: Prefix
+          backend: 
+            service:
+              name: hello-world-service-red
+              port:
+                number: 4242
+  defaultBackend:
+    service:
+      name: hello-world-service-single
+      port: 
+        number: 80
+        

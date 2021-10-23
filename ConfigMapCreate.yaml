@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: appconfigprod
+data: 
+  DATABASE_SERVERNAME: sql.example.local
+  BACKEND_SERVERNAME: be.example.local

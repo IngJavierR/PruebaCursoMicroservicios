@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-single
+spec:
+  ingressClassName: nginx
+  defaultBackend: 
+    service: 
+      name: hello-world-svc
+      port: 
+        number: 80
+        

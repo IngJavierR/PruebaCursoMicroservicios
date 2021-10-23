@@ -1,19 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-dep
+  name: hello-world-two-dep
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-world
+      app: hello-world-two
   template:
     metadata:
       labels:
-        app: hello-world
+        app: hello-world-two
     spec:
       containers:
-      - name: hello-world-pod
+      - name: hello-world-two-pod
         image: ingjavierr/microservicio-one:v1
         ports:
         - containerPort: 8090
@@ -21,11 +23,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world
+  name: hello-world-svc-two
 spec:
+  type: ClusterIP
   selector:
-    app: hello-world
+    app: hello-world-two
   ports:
-  - port: 80
+  - port: 4243
     protocol: TCP
     targetPort: 8090
